@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body {
+    font-family: Arial, sans-serif;
+    background: url("fondo_v2.png") no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    }
+    .login-box {
+      background: #dee3e7;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+      width: 300px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .login-box {
+    position: relative;
+    width: 300px; 
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    }
+
+    .logo {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    width: 75px; 
+    height: auto;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .social-links {
+    margin-top: 15px;
+    text-align: center;
+    }
+
+    .social-links img {
+    width: 30px;
+    height: auto;
+    margin: 0 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    }
+
+    .social-links img:hover {
+    transform: scale(1.1);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <img src="logo.png" alt="Logo" class="logo">
+
+    <h2>Iniciar Sesión</h2>
+    <input type="text" id="username" placeholder="Usuario">
+    <input type="password" id="password" placeholder="Contraseña">
+    <button onclick="login()">Ingresar</button>
+    <p id="error" class="error"></p>
+
+ <div class="social-links">
+      <a href="https://facebook.com/TU_USUARIO" target="_blank">
+        <img src="facebook.png" alt="Facebook">
+      </a>
+      <a href="https://linkedin.com/in/TU_USUARIO" target="_blank">
+        <img src="linkedin.png" alt="LinkedIn">
+      </a>
+      <a href="https://instagram.com/TU_USUARIO" target="_blank">
+        <img src="instagram.png" alt="Instagram">
+      </a>
+    </div>
+</div>
+
+  <script>
+
+    const usuarios = {
+      "admin": "1234",
+      "fernando": "abcd",
+      "usuario": "clave"
+    };
+
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      const errorMsg = document.getElementById("error");
+
+      if (usuarios[user] && usuarios[user] === pass) {
+        sessionStorage.setItem("usuario", user);
+        window.location.href = "home.html"; // redirigir a la página principal
+      } else {
+        errorMsg.textContent = "Usuario o contraseña incorrectos";
+      }
+    }
+  </script>
+</body>
+</html>
