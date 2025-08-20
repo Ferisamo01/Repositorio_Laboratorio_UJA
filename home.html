@@ -13,7 +13,6 @@
       background-size: cover;
     }
 
-    /* Header */
     header {
       position: fixed;
       top: 0;
@@ -159,7 +158,7 @@
     top: 100%;
     left: 0;
     width: 100%;
-    background: #555;
+    /*background: #555;*/
     padding: 0;
     }
 
@@ -169,6 +168,7 @@
 
     nav ul li ul li {
       width: 100%;
+      position: relative;
     }
 
     nav ul li ul li a:hover {
@@ -180,6 +180,35 @@
     padding: 10px;
     }
 
+    nav ul li ul li ul {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 100%;
+      background: #666;
+      width: 200px;
+      padding: 0;
+    }
+
+    nav ul li ul li:hover ul {
+      display: block;
+    }
+
+    /* Edificio B3 */
+    .menu-b3 > a { background: #8e44ad; }
+    .menu-b3 ul { background: #9b59b6; }
+    .menu-b3 ul li ul { background: #af7ac5; }
+    
+    /* Edificio C6 */
+    .menu-c6 > a { background: #27ae60; }
+    .menu-c6 ul { background: #2ecc71; }
+    .menu-c6 ul li ul { background: #58d68d; }
+    
+    /* Edificio D4 */
+    .menu-d4 > a { background: #e67e22; }
+    .menu-d4 ul { background: #f39c12; }
+    .menu-d4 ul li ul { background: #f5b041; }
+    
   </style>
 </head>
 <body>
@@ -196,7 +225,7 @@
 
   <nav>
     <ul>
-      <li><a href="#">Edificio B3</a>
+      <li class="menu-b3"><a href="#">Edificio B3</a>
         <ul>
           <li><a href="#" onclick="loadContent('Moler 1 mm')">Moler 1 mm</a></li>
           <li><a href="#" onclick="loadContent('HPLC')">HPLC</a></li>
@@ -205,12 +234,21 @@
           <li><a href="#" onclick="loadContent('Procedimiento Reactor')">Procedimiento Reactor</a></li>
         </ul>
       </li>
-      <li><a href="#">Edificio C6</a>
+      <li class="menu-c6"><a href="#">Edificio C6</a>
         <ul>
           <li><a href="#" onclick="loadContent('Medidor de pH')">Medidor de pH</a></li>
           <li><a href="#" onclick="loadContent('HPLC')">HPLC</a></li>
           <li><a href="#" onclick="loadContent('Vortex')">Vortex</a></li>
-          <li><a href="#" onclick="loadContent('Procedimiento Puls')">Procedimiento Puls</a></li>
+          
+          <li>
+            <a href="#" onclick="loadContent('Procedimiento PULS')">Procedimiento PULS ▸</a>
+            <ul>
+              <li><a href="#" onclick="loadContent('Procedimiento Caract. con solido')">Procedimiento Caract. con solido</a></li>
+              <li><a href="#" onclick="loadContent('Procedimiento Caract. con solido')">Procedimiento Caract. con solido</a></li>
+            </ul>
+          </li>
+          
+      
           <li><a href="#" onclick="loadContent('Procedimiento Lignina (LAS)')">Procedimiento Lignina (LAS)</a></li>
           <li><a href="#" onclick="loadContent('Procedimiento HPLC')">Procedimiento HPLC</a></li>
           <li><a href="#" onclick="loadContent('Procedimiento Reactor Buchi')">Procedimiento Reactor Buchi</a></li>
@@ -219,7 +257,7 @@
           
         </ul>
       </li>
-      <li><a href="#">Edificio D4</a>
+      <li class="menu-d4"><a href="#">Edificio D4</a>
         <ul>
           <li><a href="#" onclick="loadContent('Bomba Calorimétrica')">Bomba Calorimétrica</a></li>
           <li><a href="#" onclick="loadContent('B')">Opción B</a></li>
@@ -250,7 +288,7 @@
   </div>
 
   <div class="sidebar-right">
-    <h3>Panel</h3>
+    <h3>Fecha-Hora</h3>
     <div id="clock"></div>
     <div id="calendar"></div>
   </div>
@@ -362,8 +400,8 @@
                     style="width:100%; height:650px; border:none;">
             </iframe>
         `,
-      "Procedimiento Puls": `
-            <h2 style="text-align:center; color:#8B4513;">Procedimiento Puls</h2>
+      "Procedimiento PULS": `
+            <h2 style="text-align:center; color:#8B4513;">Procedimiento PULS</h2>
             <iframe src="Procedimiento PULS.pdf" 
                     style="width:100%; height:650px; border:none;">
             </iframe>
