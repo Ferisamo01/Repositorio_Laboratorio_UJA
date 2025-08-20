@@ -378,11 +378,11 @@
         }
     }
 
-    function Agendar() {
+   function Agendar() {
       const mainContent = document.getElementById("mainContent");
       mainContent.innerHTML = `
         <div style="font-family: Arial, sans-serif; padding: 20px;">
-          <h2 style="color: #2c7a7b; margin-bottom: 15px;">Agendar reunión</h2>
+          <h2 style="color: #2c7a7b; margin-bottom: 15px;">Agendar equipos</h2>
     
           <!-- Picklist -->
           <label for="opcion">Seleccione opción:</label>
@@ -399,19 +399,23 @@
           <label id="fechaSeleccionada" style="margin-left: 10px; font-weight: bold; color: #2f855a;">(ninguna)</label>
           <br><br>
     
-          <!-- Hora inicio -->
-          <label for="horaInicio">Hora de inicio:</label>
-          <input type="time" id="horaInicio" style="padding: 5px; border-radius: 5px;">
-          <br><br>
-    
-          <!-- Hora fin -->
-          <label for="horaFin">Hora de fin:</label>
-          <input type="time" id="horaFin" style="padding: 5px; border-radius: 5px;">
-          <br><br>
-    
+          <!-- Hora inicio y fin en la misma fila -->
+          <div style="display:flex; gap:20px; align-items:center; margin-bottom:20px;">
+            <div>
+              <label for="horaInicio">Hora de inicio:</label><br>
+              <input type="time" id="horaInicio" style="padding: 5px; border-radius: 5px;">
+            </div>
+            <div>
+              <label for="horaFin">Hora de fin:</label><br>
+              <input type="time" id="horaFin" style="padding: 5px; border-radius: 5px;">
+            </div>
+          </div>
+          
           <!-- Calendario estilo Teams -->
           <h3 style="color: #2c7a7b;">Vista semanal</h3>
-          <div id="calendarioTeams" style="overflow-x:auto; border: 2px solid #2c7a7b; border-radius: 10px;"></div>
+          <div id="calendarioTeams" 
+               style="max-width:100%; max-height:800px; overflow:auto; border: 2px solid #2c7a7b; border-radius: 10px;">
+          </div>
         </div>
       `;
     
@@ -441,8 +445,7 @@
         tabla.style.width = "100%";
         tabla.style.textAlign = "center";
         tabla.style.fontSize = "12px";
-    
-        // Cabecera con días
+
         const headerRow = document.createElement("tr");
         const thHoras = document.createElement("th");
         thHoras.textContent = "Horas";
