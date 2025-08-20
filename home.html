@@ -401,20 +401,16 @@
     
           <!-- Hora inicio y fin en la misma fila -->
           <div style="display:flex; gap:20px; align-items:center; margin-bottom:20px;">
-            <div>
-              <label for="horaInicio">Hora de inicio:</label><br>
-              <input type="time" id="horaInicio" style="padding: 5px; border-radius: 5px;">
-            </div>
-            <div>
-              <label for="horaFin">Hora de fin:</label><br>
-              <input type="time" id="horaFin" style="padding: 5px; border-radius: 5px;">
-            </div>
-          </div>
+            <label for="horaInicio" style="font-weight:bold;">Hora de inicio:</label>
+            <input type="time" id="horaInicio" style="padding:5px; border-radius:5px;">
           
+            <label for="horaFin" style="font-weight:bold;">Hora de fin:</label>
+            <input type="time" id="horaFin" style="padding:5px; border-radius:5px;">
+          </div>
           <!-- Calendario estilo Teams -->
           <h3 style="color: #2c7a7b;">Vista semanal</h3>
           <div id="calendarioTeams" 
-               style="max-width:100%; max-height:100px; overflow:auto; border: 2px solid #2c7a7b; border-radius: 10px;">
+               style="max-width:100%; max-height:400px; overflow:auto; border: 2px solid #2c7a7b; border-radius: 10px;">
           </div>
         </div>
       `;
