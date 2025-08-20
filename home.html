@@ -417,7 +417,52 @@
       const fechaInput = document.getElementById("fecha");
       const fechaSeleccionadaLabel = document.getElementById("fechaSeleccionada");
       const calendarioDiv = document.getElementById("calendarioTeams");
+      const opcionSelect = document.getElementById("opcion");
 
+      const opcionSelect = document.getElementById("opcion");
+
+      opcionSelect.addEventListener("change", async () => {
+          const opcion = opcionSelect.value;
+          if (!opcion) return;
+      
+          // Aquí va la URL de tu Google Sheet
+          const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTnDFRVh3fUULKl_wMuNKZ6BfG_CO1zSoVURztI_7YqnqiWp7TnDuQJy3xq_9z8Jq0kU0e6mBm6JsWo/pubhtml?gid=850291810&single=true";
+      
+          try {
+              const response = await fetch(url);
+              if (!response.ok) throw new Error("Error al obtener datos del Sheet");
+      
+              const htmlText = await response.text();
+      
+              // Parsear el HTML del Sheet
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(htmlText, "text/html");
+      
+              // Obtener la tabla del Sheet (la primera tabla del HTML)
+              const sheetTable = doc.querySelector("Reservas");
+              if (!sheetTable) throw new Error("No se encontró la tabla");
+      
+              // Recorrer filas y columnas
+              const datos = [];
+              sheetTable.querySelectorAll("tr").forEach((row) => {
+                  const fila = [];
+                  row.querySelectorAll("td").forEach((cell) => {
+                      fila.push(cell.textContent.trim());
+                  });
+                  if (fila.length > 0) datos.push(fila);
+              });
+      
+              console.log("Datos del Sheet:", datos);
+      
+              const filtrado = datos.filter(f => f[1] === opcion);
+              console.log("Filtrado por opción:", filtrado);
+      
+      
+          } catch (err) {
+              console.error("Error al recibir datos:", err);
+          }
+      });
+     
       fechaInput.addEventListener("change", () => {
         const fechaSeleccionada = new Date(fechaInput.value + "T00:00:00"); 
         if (isNaN(fechaSeleccionada)) return;
