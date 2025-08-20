@@ -418,7 +418,11 @@
       const fechaInput = document.getElementById("fecha");
       const fechaSeleccionadaLabel = document.getElementById("fechaSeleccionada");
       const calendarioDiv = document.getElementById("calendarioTeams");
-    
+
+      const hoy = new Date();
+      fechaInput.value = hoy.toISOString().split('T')[0];
+      fechaInput.dispatchEvent(new Event('change'));
+           
       fechaInput.addEventListener("change", () => {
         const fechaSeleccionada = new Date(fechaInput.value + "T00:00:00"); 
         if (isNaN(fechaSeleccionada)) return;
