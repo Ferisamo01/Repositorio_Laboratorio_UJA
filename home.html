@@ -56,7 +56,20 @@
     .sidebar-left button:hover {
       background: #777;
     }
-
+    
+    #frases-container {
+      position: absolute;
+      bottom: 20px;
+      left: 10px;
+      right: 10px;
+      text-align: left;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+    
+    #frases-container p {
+      margin: 3px 0;
+    }
     .sidebar-right {
       margin-top: 60px;
       width: 250px;
@@ -221,6 +234,7 @@
     <h3>Menú</h3>
     <button onclick="openCalculator()">Calculadora Científica</button>
     <button>Herramientas</button>
+    <div id="frases-container"></div>
   </div>
 
   <nav>
@@ -368,7 +382,37 @@
         "width=500,height=600,left=200,top=100"
       );
     }
+    function obtenerFrasesAleatorias(num) {
+      let seleccionadas = [];
+      for (let i = 0; i < num; i++) {
+        const randomIndex = Math.floor(Math.random() * frases.length);
+        seleccionadas.push(frases[randomIndex]);
+      }
+      return seleccionadas;
+    }
 
+  const frases = [
+      "El conocimiento es poder.",
+      "La práctica hace al maestro.",
+      "Nunca pares de aprender.",
+      "El tiempo es oro.",
+      "Todo esfuerzo tiene su recompensa.",
+      "La perseverancia vence.",
+      "El éxito es la suma de pequeños esfuerzos.",
+      "La creatividad es inteligencia divirtiéndose.",
+      "Aprender es crecer.",
+      "La disciplina es libertad.",
+      /*Aqui puedes agregar mas frases Rachel* :P*/
+    ];
+
+  const contenedor = document.getElementById("frases-container");
+  const frasesAleatorias = obtenerFrasesAleatorias(1);
+
+    frasesAleatorias.forEach(f => {
+      const p = document.createElement("p");
+      p.textContent = f;
+      contenedor.appendChild(p);
+    });
 
 
     const contenidos = {
