@@ -312,28 +312,6 @@
 
   <script>
     
-    const fechaInput = document.getElementById("fecha");
-    const fechaSeleccionadaLabel = document.getElementById("fechaSeleccionada");
-    const opcionSelect = document.getElementById("opcion");
-    const calendarioDiv = document.getElementById("calendarioTeams");
-
-    function actualizarCalendario() {
-        const opcion = opcionSelect.value;
-        const fecha = fechaInput.value;
-    
-        if (!opcion || !fecha) return;
-    
-        const fechaObj = new Date(fecha + "T00:00:00");
-        fechaSeleccionadaLabel.textContent = fechaObj.toLocaleDateString(undefined, {
-            weekday: "long", year: "numeric", month: "long", day: "numeric"
-        });
-    
-        renderCalendario(fechaObj);
-        cargarReservas(opcion, fecha);
-    }
-
-    fechaInput.addEventListener("change", actualizarCalendario);
-    opcionSelect.addEventListener("change", actualizarCalendario);
     
     function updateClock() {
       const now = new Date();
@@ -373,7 +351,7 @@
       document.getElementById('calendar').innerHTML = calendar;
     }
     generateCalendar();
-
+    
     function loadContent(option) {
         const mainContent = document.getElementById('mainContent');
     
@@ -401,6 +379,30 @@
         }
     }
 
+
+    const fechaInput = document.getElementById("fecha");
+    const fechaSeleccionadaLabel = document.getElementById("fechaSeleccionada");
+    const opcionSelect = document.getElementById("opcion");
+    const calendarioDiv = document.getElementById("calendarioTeams");
+
+    function actualizarCalendario() {
+        const opcion = opcionSelect.value;
+        const fecha = fechaInput.value;
+    
+        if (!opcion || !fecha) return;
+    
+        const fechaObj = new Date(fecha + "T00:00:00");
+        fechaSeleccionadaLabel.textContent = fechaObj.toLocaleDateString(undefined, {
+            weekday: "long", year: "numeric", month: "long", day: "numeric"
+        });
+    
+        renderCalendario(fechaObj);
+        cargarReservas(opcion, fecha);
+    }
+
+    fechaInput.addEventListener("change", actualizarCalendario);
+    opcionSelect.addEventListener("change", actualizarCalendario);
+    
    function Agendar() {
       const mainContent = document.getElementById("mainContent");
       mainContent.innerHTML = `
