@@ -232,9 +232,7 @@
   <div class="sidebar-left">
     <h3>Menú</h3>
     <button onclick="openCalculator()">Calculadora Científica</button>
-
     <button onclick="Agendar()">Agendar Salones</button>
-
     <div id="frase-container"></div>
   </div>
 
@@ -350,7 +348,7 @@
       document.getElementById('calendar').innerHTML = calendar;
     }
     generateCalendar();
-
+    
     function loadContent(option) {
         const mainContent = document.getElementById('mainContent');
 
@@ -495,6 +493,13 @@
       }
     }
 
+    function openCalculator() { 
+      window.open(
+        "https://www.desmos.com/scientific?lang=es",
+        "Calculadora",
+        "width=500,height=600,left=200,top=100"
+      );
+    } 
 
   const frases = [
       "El conocimiento es poder.",
