@@ -437,7 +437,7 @@
               const doc = parser.parseFromString(htmlText, "text/html");
       
               // Obtener la tabla del Sheet (la primera tabla del HTML)
-              const sheetTable = doc.querySelector("Reservas");
+              const sheetTable = doc.querySelector("table");
               if (!sheetTable) throw new Error("No se encontró la tabla");
       
               // Recorrer filas y columnas
