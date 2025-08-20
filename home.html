@@ -273,7 +273,7 @@
       <li class="menu-d4"><a href="#">Edificio D4</a>
         <ul>
           <li><a href="#" onclick="loadContent('Bomba Calorimétrica')">Bomba Calorimétrica</a></li>
-          <li><a href="#" onclick="loadContent('B')">Opción B</a></li>
+          <!--<li><a href="#" onclick="loadContent('B')">Opción B</a></li>-->
         </ul>
       </li>
       <li><a href="#">Miniprocedimientos</a>
@@ -384,11 +384,12 @@
     
           <!-- Picklist -->
           <label for="opcion">Seleccione opción:</label>
-          <select id="opcion" style="margin: 10px 0; padding: 5px; border-radius: 5px;">
-            <option value="a">Opción A</option>
-            <option value="b">Opción B</option>
-            <option value="c">Opción C</option>
-          </select>
+            <select id="opcion" style="margin: 10px 0; padding: 5px; border-radius: 5px;">
+              <option value="" disabled selected>-- Seleccione una opción --</option>
+              <option value="PIPETA">PIPETA</option>
+              <option value="TRANSMISOR">TRANSMISOR</option>
+              <option value="CENTRIFUGA">CENTRIFUGA</option>
+            </select>
           <br><br>
     
           <!-- Fecha -->
