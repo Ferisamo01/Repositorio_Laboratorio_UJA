@@ -379,83 +379,121 @@
     }
 
     function Agendar() {
-      const mainContent = document.getElementById('mainContent');
-    
+      const mainContent = document.getElementById("mainContent");
       mainContent.innerHTML = `
-        <div style="padding: 20px; font-size: 1em;">
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2 style="color: #2c7a7b; margin-bottom: 15px;">Agendar reunión</h2>
     
           <!-- Picklist -->
-          <label for="opcion">Selecciona una opción:</label>
-          <select id="opcion">
+          <label for="opcion">Seleccione opción:</label>
+          <select id="opcion" style="margin: 10px 0; padding: 5px; border-radius: 5px;">
             <option value="a">Opción A</option>
             <option value="b">Opción B</option>
             <option value="c">Opción C</option>
           </select>
           <br><br>
     
-          <!-- Calendario -->
-          <label for="fecha">Selecciona una fecha:</label>
-          <input type="date" id="fecha">
-          <span id="fechaSeleccionada" 
-                style="margin-left:10px; font-weight:bold;">---</span>
+          <!-- Fecha -->
+          <label for="fecha">Seleccione fecha:</label>
+          <input type="date" id="fecha" style="padding: 5px; border-radius: 5px;">
+          <label id="fechaSeleccionada" style="margin-left: 10px; font-weight: bold; color: #2f855a;">(ninguna)</label>
           <br><br>
     
-          <!-- Hora inicio y fin -->
-          <label>Hora inicio:</label>
-          <input type="time" id="horaInicio">
-          <label style="margin-left:20px;">Hora fin:</label>
-          <input type="time" id="horaFin">
+          <!-- Hora inicio -->
+          <label for="horaInicio">Hora de inicio:</label>
+          <input type="time" id="horaInicio" style="padding: 5px; border-radius: 5px;">
           <br><br>
     
-          <!-- Mini calendario tipo Teams -->
-          <div id="miniCalendario"></div>
+          <!-- Hora fin -->
+          <label for="horaFin">Hora de fin:</label>
+          <input type="time" id="horaFin" style="padding: 5px; border-radius: 5px;">
+          <br><br>
     
+          <!-- Calendario estilo Teams -->
+          <h3 style="color: #2c7a7b;">Vista semanal</h3>
+          <div id="calendarioTeams" style="overflow-x:auto; border: 2px solid #2c7a7b; border-radius: 10px;"></div>
         </div>
       `;
     
       const fechaInput = document.getElementById("fecha");
-      const fechaLabel = document.getElementById("fechaSeleccionada");
-      const miniCalendario = document.getElementById("miniCalendario");
+      const fechaSeleccionadaLabel = document.getElementById("fechaSeleccionada");
+      const calendarioDiv = document.getElementById("calendarioTeams");
     
       fechaInput.addEventListener("change", () => {
-        const fecha = new Date(fechaInput.value);
-        if (!isNaN(fecha)) {
-          fechaLabel.textContent = fecha.toDateString();
-          renderMiniCalendario(fecha, miniCalendario);
-        }
-      });
-    }
+        const fechaSeleccionada = new Date(fechaInput.value + "T00:00:00"); 
+        if (isNaN(fechaSeleccionada)) return;
     
-    function renderMiniCalendario(fechaCentral, contenedor) {
-      const dias = [];
-      for (let i = -3; i <= 3; i++) {
-        const d = new Date(fechaCentral);
-        d.setDate(fechaCentral.getDate() + i);
-        dias.push(d);
-      }
-    
-      let html = `<table border="1" cellspacing="0" cellpadding="5" style="border-collapse:collapse; text-align:center; width:100%;">`;
-      html += "<tr><th>Hora</th>";
-      dias.forEach(d => {
-        const isCentral = d.toDateString() === fechaCentral.toDateString();
-        html += `<th style="${isCentral ? 'background:#d1e7ff;' : ''}">
-                   ${d.toLocaleDateString('es-PE', { weekday: 'short', day: 'numeric' })}
-                 </th>`;
-      });
-      html += "</tr>";
-    
-      // horas de 07:00 a 22:00
-      for (let h = 7; h <= 22; h++) {
-        html += `<tr><td>${String(h).padStart(2,'0')}:00</td>`;
-        dias.forEach(d => {
-          const isCentral = d.toDateString() === fechaCentral.toDateString();
-          html += `<td style="height:30px; ${isCentral ? 'background:#f8f9fa;' : ''}"></td>`;
+        fechaSeleccionadaLabel.textContent = fechaSeleccionada.toLocaleDateString(undefined, {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric"
         });
-        html += "</tr>";
-      }
     
-      html += "</table>";
-      contenedor.innerHTML = html;
+        renderCalendario(fechaSeleccionada);
+      });
+    
+      function renderCalendario(fechaCentral) {
+        calendarioDiv.innerHTML = "";
+        
+        const tabla = document.createElement("table");
+        tabla.style.borderCollapse = "collapse";
+        tabla.style.width = "100%";
+        tabla.style.textAlign = "center";
+        tabla.style.fontSize = "12px";
+    
+        // Cabecera con días
+        const headerRow = document.createElement("tr");
+        const thHoras = document.createElement("th");
+        thHoras.textContent = "Horas";
+        thHoras.style.background = "#2c7a7b";
+        thHoras.style.color = "white";
+        thHoras.style.padding = "5px";
+        headerRow.appendChild(thHoras);
+    
+        for (let i = -3; i <= 3; i++) {
+          const fecha = new Date(fechaCentral);
+          fecha.setDate(fechaCentral.getDate() + i);
+    
+          const th = document.createElement("th");
+          th.textContent = fecha.toLocaleDateString(undefined, { weekday: "short", day: "numeric" });
+          th.style.padding = "5px";
+          th.style.background = i === 0 ? "#48bb78" : "#9ae6b4";
+          th.style.color = "#1a202c";
+          th.style.border = "1px solid #ccc";
+          headerRow.appendChild(th);
+        }
+        tabla.appendChild(headerRow);
+    
+        // Filas con horas
+        for (let hora = 7; hora <= 22; hora++) {
+          const fila = document.createElement("tr");
+    
+          const thHora = document.createElement("th");
+          thHora.textContent = hora + ":00";
+          thHora.style.background = "#e6fffa";
+          thHora.style.padding = "5px";
+          thHora.style.border = "1px solid #ccc";
+          fila.appendChild(thHora);
+    
+          for (let i = -3; i <= 3; i++) {
+            const td = document.createElement("td");
+            td.style.border = "1px solid #ddd";
+            td.style.height = "30px";
+            td.style.cursor = "pointer";
+            td.style.background = "#f0fff4";
+    
+            td.addEventListener("click", () => {
+              td.style.background = td.style.background === "lightblue" ? "#f0fff4" : "lightblue";
+            });
+    
+            fila.appendChild(td);
+          }
+          tabla.appendChild(fila);
+        }
+    
+        calendarioDiv.appendChild(tabla);
+      }
     }
 
 
