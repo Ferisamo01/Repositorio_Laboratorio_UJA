@@ -56,7 +56,7 @@
     .sidebar-left button:hover {
       background: #777;
     }
-    
+
     #frase-container {
       position: absolute;
       bottom: 40px; 
@@ -116,12 +116,12 @@
       background: rgba(255, 255, 255, 0.9);
       border-radius: 10px; 
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      
+
       margin-left: 10px;
       margin-right: 10px;
       margin-bottom: 10px; 
     }
-    
+
 
 
     nav {
@@ -187,7 +187,7 @@
       background: #626781;
     }
 
-    
+
     nav ul li ul li a {
     padding: 10px;
     }
@@ -210,17 +210,17 @@
     .menu-b3 > a { background: #8e44ad; }
     .menu-b3 ul { background: #9b59b6; }
     .menu-b3 ul li ul { background: #af7ac5; }
-    
+
     /* Edificio C6 */
     .menu-c6 > a { background: #27ae60; }
     .menu-c6 ul { background: #2ecc71; }
     .menu-c6 ul li ul { background: #58d68d; }
-    
+
     /* Edificio D4 */
     .menu-d4 > a { background: #e67e22; }
     .menu-d4 ul { background: #f39c12; }
     .menu-d4 ul li ul { background: #f5b041; }
-    
+
   </style>
 </head>
 <body>
@@ -234,7 +234,7 @@
     <button onclick="openCalculator()">Calculadora Científica</button>
 
     <button onclick="Agendar()">Agendar Salones</button>
-    
+
     <div id="frase-container"></div>
   </div>
 
@@ -254,7 +254,7 @@
           <li><a href="#" onclick="loadContent('Medidor de pH')">Medidor de pH</a></li>
           <li><a href="#" onclick="loadContent('HPLC')">HPLC</a></li>
           <li><a href="#" onclick="loadContent('Vortex')">Vortex</a></li>
-          
+
           <li>
             <a href="#" onclick="loadContent('Procedimiento PULS')">Procedimiento PULS ▸</a>
             <ul>
@@ -262,14 +262,14 @@
               <li><a href="#" onclick="loadContent('Procedimiento Caract. sin solido')">Procedimiento Caract. sin pretratamiento</a></li>
             </ul>
           </li>
-          
-      
+
+
           <li><a href="#" onclick="loadContent('Procedimiento Lignina (LAS)')">Procedimiento Lignina (LAS)</a></li>
           <li><a href="#" onclick="loadContent('Procedimiento HPLC')">Procedimiento HPLC</a></li>
           <li><a href="#" onclick="loadContent('Procedimiento Reactor Buchi')">Procedimiento Reactor Buchi</a></li>
           <li><a href="#" onclick="loadContent('Procedimiento Reactor Caseta')">Procedimiento Reactor Caseta</a></li>
           <li><a href="#" onclick="loadContent('Procedimiento Post Hidrólisis')">Procedimiento Post Hidrólisis</a></li>
-          
+
         </ul>
       </li>
       <li class="menu-d4"><a href="#">Edificio D4</a>
@@ -311,8 +311,7 @@
   </div>
 
   <script>
-    
-    
+
     function updateClock() {
       const now = new Date();
       document.getElementById('clock').innerText = 
@@ -351,10 +350,10 @@
       document.getElementById('calendar').innerHTML = calendar;
     }
     generateCalendar();
-    
+
     function loadContent(option) {
         const mainContent = document.getElementById('mainContent');
-    
+
         if (contenidos[option]) {
             if (contenidos[option].endsWith(".pdf")) {
                 mainContent.innerHTML = `
@@ -379,33 +378,9 @@
         }
     }
 
-
-    //const fechaInput = document.getElementById("fecha");
-    //const fechaSeleccionadaLabel = document.getElementById("fechaSeleccionada");
-    //const opcionSelect = document.getElementById("opcion");
-    //const calendarioDiv = document.getElementById("calendarioTeams");
-
-    /*function actualizarCalendario() {
-        const opcion = opcionSelect.value;
-        const fecha = fechaInput.value;
-    
-        if (!opcion || !fecha) return;
-    
-        const fechaObj = new Date(fecha + "T00:00:00");
-        fechaSeleccionadaLabel.textContent = fechaObj.toLocaleDateString(undefined, {
-            weekday: "long", year: "numeric", month: "long", day: "numeric"
-        });
-    
-        renderCalendario(fechaObj);
-        cargarReservas(opcion, fecha);
-    }
-
-    fechaInput.addEventListener("change", actualizarCalendario);
-    opcionSelect.addEventListener("change", actualizarCalendario);*/
-    
    function Agendar() {
       const mainContent = document.getElementById("mainContent");
-      mainContent.innerHTML = 
+      mainContent.innerHTML = `
         <div style="font-family: Arial, sans-serif; padding: 20px;">
           <h2 style="color: #2c7a7b; margin-bottom: 15px;">Agendar equipos</h2>
     
@@ -438,31 +413,29 @@
                style="max-width:100%; height: calc(100vh - 430px); overflow:auto; border: 2px solid #2c7a7b; border-radius: 10px;">
           </div>
         </div>
-      ;
-    
+      `;
+
       const fechaInput = document.getElementById("fecha");
       const fechaSeleccionadaLabel = document.getElementById("fechaSeleccionada");
       const calendarioDiv = document.getElementById("calendarioTeams");
 
-      const hoy = new Date();
-
       fechaInput.addEventListener("change", () => {
         const fechaSeleccionada = new Date(fechaInput.value + "T00:00:00"); 
         if (isNaN(fechaSeleccionada)) return;
-    
+
         fechaSeleccionadaLabel.textContent = fechaSeleccionada.toLocaleDateString(undefined, {
           weekday: "long",
           year: "numeric",
           month: "long",
           day: "numeric"
         });
-    
+
         renderCalendario(fechaSeleccionada);
       });
-    
+
       function renderCalendario(fechaCentral) {
         calendarioDiv.innerHTML = "";
-        
+
         const tabla = document.createElement("table");
         tabla.style.borderCollapse = "collapse";
         tabla.style.width = "100%";
@@ -475,63 +448,54 @@
         thHoras.style.background = "#2c7a7b";
         thHoras.style.color = "white";
         thHoras.style.padding = "5px";
-        thHoras.style.position = "sticky";
-        thHoras.style.top = "0";        // fija la fila al top al hacer scroll vertical
-        thHoras.style.zIndex = "2";     // suficiente para que quede sobre las celdas
         headerRow.appendChild(thHoras);
-    
+
         for (let i = -3; i <= 3; i++) {
           const fecha = new Date(fechaCentral);
           fecha.setDate(fechaCentral.getDate() + i);
-    
+
           const th = document.createElement("th");
           th.textContent = fecha.toLocaleDateString(undefined, { weekday: "short", day: "numeric" });
           th.style.padding = "5px";
           th.style.background = i === 0 ? "#48bb78" : "#9ae6b4";
           th.style.color = "#1a202c";
           th.style.border = "1px solid #ccc";
-          th.style.height = "50px";
-          th.style.position = "sticky";
-          th.style.top = "0";
-          th.style.zIndex = "2";
           headerRow.appendChild(th);
         }
         tabla.appendChild(headerRow);
-    
+
         // Filas con horas
         for (let hora = 7; hora <= 22; hora++) {
           const fila = document.createElement("tr");
-    
+
           const thHora = document.createElement("th");
           thHora.textContent = hora + ":00";
           thHora.style.background = "#e6fffa";
           thHora.style.padding = "5px";
           thHora.style.border = "1px solid #ccc";
           fila.appendChild(thHora);
-    
+
           for (let i = -3; i <= 3; i++) {
             const td = document.createElement("td");
             td.style.border = "1px solid #ddd";
             td.style.height = "30px";
             td.style.cursor = "pointer";
             td.style.background = "#f0fff4";
-    
+
             td.addEventListener("click", () => {
               td.style.background = td.style.background === "lightblue" ? "#f0fff4" : "lightblue";
             });
-    
+
             fila.appendChild(td);
           }
           tabla.appendChild(fila);
         }
-    
+
         calendarioDiv.appendChild(tabla);
       }
-      
-     fechaInput.value = hoy.toISOString().split('T')[0];
-     fechaInput.dispatchEvent(new Event('change'));
-           
     }
+
+
   const frases = [
       "El conocimiento es poder.",
       "La práctica hace al maestro.",
@@ -637,8 +601,8 @@
                     style="width:100%; height:650px; border:none;">
             </iframe>
         `,
-      
-      
+
+
         "HPLC": `
             <h2 style="text-align:center; color:#006400;">HPLC B3</h2>
             <ol>
