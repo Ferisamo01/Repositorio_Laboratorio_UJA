@@ -57,18 +57,14 @@
       background: #777;
     }
     
-    #frases-container {
+    #frase-container {
       position: absolute;
-      bottom: 20px;
+      bottom: 20px;   /* distancia desde abajo */
       left: 10px;
       right: 10px;
-      text-align: left;
       font-size: 13px;
-      line-height: 1.2;
-    }
-    
-    #frases-container p {
-      margin: 3px 0;
+      font-style: italic;
+      text-align: left;
     }
     .sidebar-right {
       margin-top: 60px;
@@ -234,7 +230,7 @@
     <h3>Menú</h3>
     <button onclick="openCalculator()">Calculadora Científica</button>
     <button>Herramientas</button>
-    <div id="frases-container"></div>
+    <div id="frase-container"></div>
   </div>
 
   <nav>
@@ -382,14 +378,7 @@
         "width=500,height=600,left=200,top=100"
       );
     }
-    function obtenerFrasesAleatorias(num) {
-      let seleccionadas = [];
-      for (let i = 0; i < num; i++) {
-        const randomIndex = Math.floor(Math.random() * frases.length);
-        seleccionadas.push(frases[randomIndex]);
-      }
-      return seleccionadas;
-    }
+
 
   const frases = [
       "El conocimiento es poder.",
@@ -404,16 +393,8 @@
       "La disciplina es libertad.",
       /*Aqui puedes agregar mas frases Rachel* :P*/
     ];
-
-  const contenedor = document.getElementById("frases-container");
-  const frasesAleatorias = obtenerFrasesAleatorias(1);
-
-    frasesAleatorias.forEach(f => {
-      const p = document.createElement("p");
-      p.textContent = f;
-      contenedor.appendChild(p);
-    });
-
+  const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
+  document.getElementById("frase-container").textContent = fraseAleatoria;
 
     const contenidos = {
         "Moler 1 mm": `
