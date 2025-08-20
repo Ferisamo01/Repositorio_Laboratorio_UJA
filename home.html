@@ -380,12 +380,12 @@
     }
 
 
-    const fechaInput = document.getElementById("fecha");
-    const fechaSeleccionadaLabel = document.getElementById("fechaSeleccionada");
-    const opcionSelect = document.getElementById("opcion");
-    const calendarioDiv = document.getElementById("calendarioTeams");
+    //const fechaInput = document.getElementById("fecha");
+    //const fechaSeleccionadaLabel = document.getElementById("fechaSeleccionada");
+    //const opcionSelect = document.getElementById("opcion");
+    //const calendarioDiv = document.getElementById("calendarioTeams");
 
-    function actualizarCalendario() {
+    /*function actualizarCalendario() {
         const opcion = opcionSelect.value;
         const fecha = fechaInput.value;
     
@@ -401,11 +401,11 @@
     }
 
     fechaInput.addEventListener("change", actualizarCalendario);
-    opcionSelect.addEventListener("change", actualizarCalendario);
+    opcionSelect.addEventListener("change", actualizarCalendario);*/
     
    function Agendar() {
       const mainContent = document.getElementById("mainContent");
-      mainContent.innerHTML = `
+      mainContent.innerHTML = 
         <div style="font-family: Arial, sans-serif; padding: 20px;">
           <h2 style="color: #2c7a7b; margin-bottom: 15px;">Agendar equipos</h2>
     
@@ -438,7 +438,7 @@
                style="max-width:100%; height: calc(100vh - 430px); overflow:auto; border: 2px solid #2c7a7b; border-radius: 10px;">
           </div>
         </div>
-      `;
+      ;
     
       const fechaInput = document.getElementById("fecha");
       const fechaSeleccionadaLabel = document.getElementById("fechaSeleccionada");
@@ -459,36 +459,16 @@
     
         renderCalendario(fechaSeleccionada);
       });
-     
-      async function cargarReservas(opcion, fecha) {
-        if(!opcion || !fecha) return [];
     
-          const res = await fetch(SHEET_URL);
-          const text = await res.text();
-          const json = JSON.parse(text.substr(47).slice(0, -2));
-          const rows = json.table.rows;
-      
-          const reservas = rows.slice(1).map(r => ({
-              Usuario: r.c[0].v,
-              Aula: r.c[1].v,
-              Hora_inicio: r.c[2].v,
-              Hora_fin: r.c[3].v,
-              Fecha: r.c[4].v,
-              Motivo: r.c[5].v
-          }));
-      
-          return reservas.filter(r => r.Fecha === fecha && r.Aula === opcion);
-      }
-     
-     async function renderCalendario(fechaCentral) {
+      function renderCalendario(fechaCentral) {
         calendarioDiv.innerHTML = "";
-    
+        
         const tabla = document.createElement("table");
         tabla.style.borderCollapse = "collapse";
         tabla.style.width = "100%";
         tabla.style.textAlign = "center";
         tabla.style.fontSize = "12px";
-    
+
         const headerRow = document.createElement("tr");
         const thHoras = document.createElement("th");
         thHoras.textContent = "Horas";
@@ -501,104 +481,57 @@
         headerRow.appendChild(thHoras);
     
         for (let i = -3; i <= 3; i++) {
-            const fecha = new Date(fechaCentral);
-            fecha.setDate(fechaCentral.getDate() + i);
+          const fecha = new Date(fechaCentral);
+          fecha.setDate(fechaCentral.getDate() + i);
     
-            const th = document.createElement("th");
-            th.textContent = fecha.toLocaleDateString(undefined, { weekday: "short", day: "numeric" });
-            th.style.padding = "5px";
-            th.style.background = i === 0 ? "#48bb78" : "#9ae6b4";
-            th.style.color = "#1a202c";
-            th.style.border = "1px solid #ccc";
-            th.style.height = "50px";
-            th.style.position = "sticky";
-            th.style.top = "0";
-            th.style.zIndex = "2";
-            headerRow.appendChild(th);
+          const th = document.createElement("th");
+          th.textContent = fecha.toLocaleDateString(undefined, { weekday: "short", day: "numeric" });
+          th.style.padding = "5px";
+          th.style.background = i === 0 ? "#48bb78" : "#9ae6b4";
+          th.style.color = "#1a202c";
+          th.style.border = "1px solid #ccc";
+          th.style.height = "50px";
+          th.style.position = "sticky";
+          th.style.top = "0";
+          th.style.zIndex = "2";
+          headerRow.appendChild(th);
         }
         tabla.appendChild(headerRow);
     
         // Filas con horas
         for (let hora = 7; hora <= 22; hora++) {
-            const fila = document.createElement("tr");
+          const fila = document.createElement("tr");
     
-            const thHora = document.createElement("th");
-            thHora.textContent = hora + ":00";
-            thHora.style.background = "#e6fffa";
-            thHora.style.padding = "5px";
-            thHora.style.border = "1px solid #ccc";
-            fila.appendChild(thHora);
+          const thHora = document.createElement("th");
+          thHora.textContent = hora + ":00";
+          thHora.style.background = "#e6fffa";
+          thHora.style.padding = "5px";
+          thHora.style.border = "1px solid #ccc";
+          fila.appendChild(thHora);
     
-            for (let i = -3; i <= 3; i++) {
-                const td = document.createElement("td");
-                td.style.border = "1px solid #ddd";
-                td.style.height = "30px";
-                td.style.cursor = "pointer";
-                td.style.background = "#f0fff4";
+          for (let i = -3; i <= 3; i++) {
+            const td = document.createElement("td");
+            td.style.border = "1px solid #ddd";
+            td.style.height = "30px";
+            td.style.cursor = "pointer";
+            td.style.background = "#f0fff4";
     
-                td.addEventListener("click", () => {
-                    td.style.background = td.style.background === "lightblue" ? "#f0fff4" : "lightblue";
-                });
+            td.addEventListener("click", () => {
+              td.style.background = td.style.background === "lightblue" ? "#f0fff4" : "lightblue";
+            });
     
-                fila.appendChild(td);
-            }
-            tabla.appendChild(fila);
+            fila.appendChild(td);
+          }
+          tabla.appendChild(fila);
         }
     
         calendarioDiv.appendChild(tabla);
-    
-        const opcion = document.getElementById("opcion").value;
-        const fecha = fechaCentral.toISOString().split('T')[0];
-        if (!opcion || !fecha) return;
-    
-        const SHEET_URL = "https://docs.google.com/spreadsheets/d/1H3dkzjr8Y9KFXM63mkN9pNLu5_v721LVTctALiH0HY4/gviz/tq?tqx=out:json&sheet=Reservas";
-        const res = await fetch(SHEET_URL);
-        const text = await res.text();
-        const json = JSON.parse(text.substr(47).slice(0, -2));
-        const rows = json.table.rows;
-    
-        const reservas = rows.slice(1).map(r => ({
-            Usuario: r.c[0].v,
-            Aula: r.c[1].v,
-            Hora_inicio: r.c[2].v,
-            Hora_fin: r.c[3].v,
-            Fecha: r.c[4].v,
-            Motivo: r.c[5].v
-        }));
-    
-        const reservasFiltradas = reservas.filter(r => r.Fecha === fecha && r.Aula === opcion);
-    
-        reservasFiltradas.forEach(r => {
-            const [hIni, mIni] = r.Hora_inicio.split(":").map(Number);
-            const [hFin, mFin] = r.Hora_fin.split(":").map(Number);
-    
-            for (let h = hIni; h <= hFin; h++) {
-                const fila = tabla.rows[h - 7 + 1];
-                if (!fila) continue;
-    
-                const td = fila.cells[4];
-                let altura = 30; 
-    
-                if (h === hIni) altura = ((60 - mIni) / 60) * 30;
-                if (h === hFin) altura = (mFin / 60) * 30;
-    
-                td.style.background = "#38a169";
-                td.style.height = altura + "px";
-            }
-        });
-    }
+      }
       
      fechaInput.value = hoy.toISOString().split('T')[0];
      fechaInput.dispatchEvent(new Event('change'));
            
     }
-    
-    document.getElementById("opcion").addEventListener("change", () => {
-        const fecha = fechaInput.value;
-        const opcion = document.getElementById("opcion").value;
-        if(fecha && opcion) fechaInput.dispatchEvent(new Event('change'));
-    });
-
   const frases = [
       "El conocimiento es poder.",
       "La práctica hace al maestro.",
