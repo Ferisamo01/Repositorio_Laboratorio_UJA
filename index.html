@@ -112,11 +112,14 @@
 
   <script>
 
-    const usuarios = {
-      "admin": "1234",
-      "fernando": "abcd",
-      "usuario": "clave"
-    };
+    let usuarios = {};
+
+    fetch("Contrasenas.json")
+      .then(response => response.json())
+      .then(data => {
+        usuarios = data;
+      })
+      .catch(error => console.error("Error cargando usuarios:", error));
 
     function login() {
       const user = document.getElementById("username").value;
