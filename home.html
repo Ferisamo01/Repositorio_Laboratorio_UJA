@@ -423,38 +423,32 @@
           const opcion = opcionSelect.value;
           if (!opcion) return;
       
-          // Aquí va la URL de tu Google Sheet
-          const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTnDFRVh3fUULKl_wMuNKZ6BfG_CO1zSoVURztI_7YqnqiWp7TnDuQJy3xq_9z8Jq0kU0e6mBm6JsWo/pubhtml?gid=850291810&single=true";
+          // URL pública de tu Google Sheet en CSV
+          const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTnDFRVh3fUULKl_wMuNKZ6BfG_CO1zSoVURztI_7YqnqiWp7TnDuQJy3xq_9z8Jq0kU0e6mBm6JsWo/pub?gid=850291810&single=true&output=csv";
       
           try {
               const response = await fetch(url);
               if (!response.ok) throw new Error("Error al obtener datos del Sheet");
       
-              const htmlText = await response.text();
+              const csvText = await response.text();
       
-              // Parsear el HTML del Sheet
-              const parser = new DOMParser();
-              const doc = parser.parseFromString(htmlText, "text/html");
+              // Convertir CSV a array de arrays
+              const filas = csvText.split("\n").map(f => f.split(","));
       
-              // Obtener la tabla del Sheet (la primera tabla del HTML)
-              const sheetTable = doc.querySelector("table");
-              if (!sheetTable) throw new Error("No se encontró la tabla");
+              console.log("Datos del Sheet:", filas);
       
-              // Recorrer filas y columnas
-              const datos = [];
-              sheetTable.querySelectorAll("tr").forEach((row) => {
-                  const fila = [];
-                  row.querySelectorAll("td").forEach((cell) => {
-                      fila.push(cell.textContent.trim());
-                  });
-                  if (fila.length > 0) datos.push(fila);
-              });
-      
-              console.log("Datos del Sheet:", datos);
-      
-              const filtrado = datos.filter(f => f[1] === opcion);
+              // Filtrado por opción seleccionada (puedes cambiar f[1] según la columna que quieras)
+              const filtrado = filas.filter(f => f[1] === opcion);
               console.log("Filtrado por opción:", filtrado);
       
+              // Opcional: mostrar en HTML
+              const resultadoDiv = document.getElementById("resultado");
+              resultadoDiv.innerHTML = "";
+              filtrado.forEach(fila => {
+                  const div = document.createElement("div");
+                  div.textContent = fila.join(" | ");
+                  resultadoDiv.appendChild(div);
+              });
       
           } catch (err) {
               console.error("Error al recibir datos:", err);
