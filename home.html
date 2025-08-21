@@ -461,7 +461,7 @@
                 return filaOpcion === opcion && filaFechaObj >= fechaMin && filaFechaObj <= fechaMax;
             });
         
-            console.log("FEventos filtrados ±3 días", eventosFiltrados);
+            console.log("Eventos filtrados ±3 días", eventosFiltrados);
     
             // Mostrar en HTML
             
@@ -485,8 +485,6 @@
         });
     
         renderCalendario(fechaSeleccionada);
-    
-        // Gatillar filtrado
         cargarYFiltrarDatos();
     });
      
@@ -568,7 +566,7 @@
       });
       
       if (eventosCelda.length > 0){
-      console.log(eventosCelda)
+      console.log("Hola")
       }
 
       eventosCelda.forEach(ev => {
