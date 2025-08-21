@@ -495,105 +495,103 @@
      fechaInput.dispatchEvent(new Event('change'));
        
      function renderCalendario(fechaCentral) {
-        calendarioDiv.innerHTML = "";
-      
-        const tabla = document.createElement("table");
-        tabla.style.borderCollapse = "collapse";
-        tabla.style.width = "100%";
-        tabla.style.textAlign = "center";
-        tabla.style.fontSize = "12px";
-      
-        const headerRow = document.createElement("tr");
-        const thHoras = document.createElement("th");
-        thHoras.textContent = "Horas";
-        thHoras.style.background = "#2c7a7b";
-        thHoras.style.color = "white";
-        thHoras.style.padding = "5px";
-        thHoras.style.position = "sticky";
-        thHoras.style.top = "0";
-        thHoras.style.zIndex = "2";
-        headerRow.appendChild(thHoras);
-      
-        for (let i = -3; i <= 3; i++) {
-          const fecha = new Date(fechaCentral);
-          fecha.setDate(fechaCentral.getDate() + i);
-      
-          const th = document.createElement("th");
-          th.textContent = fecha.toLocaleDateString(undefined, { weekday: "short", day: "numeric" });
-          th.style.padding = "5px";
-          th.style.background = i === 0 ? "#48bb78" : "#9ae6b4";
-          th.style.color = "#1a202c";
-          th.style.border = "1px solid #ccc";
-          th.style.height = "50px";
-          th.style.position = "sticky";
-          th.style.top = "0";
-          th.style.zIndex = "2";
-          headerRow.appendChild(th);
-        }
-        tabla.appendChild(headerRow);
-      
-        // Filas con horas
-        for (let hora = 7; hora <= 22; hora++) {
-          const fila = document.createElement("tr");
-      
-          const thHora = document.createElement("th");
-          thHora.textContent = hora + ":00";
-          thHora.style.background = "#e6fffa";
-          thHora.style.padding = "5px";
-          thHora.style.border = "1px solid #ccc";
-          fila.appendChild(thHora);
-      
-          for (let i = -3; i <= 3; i++) {
-            const fecha = new Date(fechaCentral);
-            fecha.setDate(fechaCentral.getDate() + i);
-      
-            const td = document.createElement("td");
-            td.style.border = "1px solid #ddd";
-            td.style.height = "30px";
-            td.style.cursor = "pointer";
-            td.style.background = "#f0fff4";
-            td.style.position = "relative"; // para overlay proporcional
-      
-            td.addEventListener("click", () => {
-              td.style.background = td.style.background === "lightblue" ? "#f0fff4" : "lightblue";
-            });
-      
-            // Buscar eventos que caen en esta celda
-            const fechaStr = fecha.toLocaleDateString("es-PE"); // mismo formato que tu array
-            const eventosCelda = eventosFiltrados.filter(ev => ev[4] === fechaStr);
-      
-            eventosCelda.forEach(ev => {
-              const [usuario, equipo, horaInicio, horaFin, fechaEvento, motivo] = ev;
-      
-              const [hIni, mIni] = horaInicio.split(":").map(Number);
-              const [hFin, mFin] = horaFin.split(":").map(Number);
-      
-              if (hIni <= hora && hFin >= hora) {
-                // Calcular fracción dentro de esta celda
-                let startPerc = (hIni === hora ? (mIni / 60) * 100 : 0);
-                let endPerc = (hFin === hora ? (mFin / 60) * 100 : 100);
-      
-                const bloque = document.createElement("div");
-                bloque.style.position = "absolute";
-                bloque.style.left = "0";
-                bloque.style.right = "0";
-                bloque.style.top = startPerc + "%";
-                bloque.style.height = (endPerc - startPerc) + "%";
-                bloque.style.background = "rgba(72,187,120,0.8)";
-                bloque.style.border = "1px solid #2f855a";
-                bloque.title = `Usuario: ${usuario}\nMotivo: ${motivo}`;
-      
-                td.appendChild(bloque);
-              }
-            });
-      
-            fila.appendChild(td);
-          }
-          tabla.appendChild(fila);
-        }
-      
-        calendarioDiv.appendChild(tabla);
-      }
+  calendarioDiv.innerHTML = "";
+
+  const tabla = document.createElement("table");
+  tabla.style.borderCollapse = "collapse";
+  tabla.style.width = "100%";
+  tabla.style.textAlign = "center";
+  tabla.style.fontSize = "12px";
+
+  const headerRow = document.createElement("tr");
+  const thHoras = document.createElement("th");
+  thHoras.textContent = "Horas";
+  thHoras.style.background = "#2c7a7b";
+  thHoras.style.color = "white";
+  thHoras.style.padding = "5px";
+  thHoras.style.position = "sticky";  
+  thHoras.style.top = "0";
+  thHoras.style.zIndex = "2";
+  headerRow.appendChild(thHoras);
+
+  for (let i = -3; i <= 3; i++) {
+    const fecha = new Date(fechaCentral);
+    fecha.setDate(fechaCentral.getDate() + i);
+
+    const th = document.createElement("th");
+    th.textContent = fecha.toLocaleDateString(undefined, { weekday: "short", day: "numeric" });
+    th.style.padding = "5px";
+    th.style.background = i === 0 ? "#48bb78" : "#9ae6b4";
+    th.style.color = "#1a202c";
+    th.style.border = "1px solid #ccc";
+    th.style.height = "50px";
+    th.style.position = "sticky";  
+    th.style.top = "0";
+    th.style.zIndex = "2";
+    headerRow.appendChild(th);
+  }
+  tabla.appendChild(headerRow);
+
+  // Filas con horas
+  for (let hora = 7; hora <= 22; hora++) {
+    const fila = document.createElement("tr");
+
+    const thHora = document.createElement("th");
+    thHora.textContent = hora + ":00";
+    thHora.style.background = "#e6fffa";
+    thHora.style.padding = "5px";
+    thHora.style.border = "1px solid #ccc";
+    fila.appendChild(thHora);
+
+    for (let i = -3; i <= 3; i++) {
+      const fecha = new Date(fechaCentral);
+      fecha.setDate(fechaCentral.getDate() + i);
+
+      const td = document.createElement("td");
+      td.style.border = "1px solid #ddd";
+      td.style.height = "40px";
+      td.style.position = "relative";   // necesario para ubicar los divs internos
+      td.style.background = "#f0fff4";
+
+      // Buscar si hay eventos en esta fecha-hora
+      const fechaStr = fecha.toISOString().split("T")[0]; // YYYY-MM-DD
+      const eventosCelda = eventosFiltrados.filter(ev => {
+        return ev.Fecha === fechaStr &&
+               parseInt(ev.Hora_inicio.split(":")[0]) <= hora &&
+               parseInt(ev.Hora_fin.split(":")[0]) >= hora;
+      });
+
+      eventosCelda.forEach(ev => {
+        const [hIni, mIni] = ev.Hora_inicio.split(":").map(Number);
+        const [hFin, mFin] = ev.Hora_fin.split(":").map(Number);
+
+        let inicioMin = (hora === hIni) ? mIni : 0;
+        let finMin = (hora === hFin) ? mFin : 60;
+
+        const duracion = finMin - inicioMin;
+
+        // Crear bloque visual dentro del td
+        const bloque = document.createElement("div");
+        bloque.style.position = "absolute";
+        bloque.style.left = "0";
+        bloque.style.width = "100%";
+        bloque.style.top = (inicioMin / 60) * 100 + "%";
+        bloque.style.height = (duracion / 60) * 100 + "%";
+        bloque.style.background = "rgba(72, 187, 120, 0.8)";
+        bloque.style.borderRadius = "3px";
+        bloque.title = `${ev.Usuario} - ${ev.Motivo}`;
+
+        td.appendChild(bloque);
+      });
+
+      fila.appendChild(td);
+    }
+    tabla.appendChild(fila);
+  }
+
+  calendarioDiv.appendChild(tabla);
+}
+
    }    
 
     function openCalculator() { 
