@@ -441,7 +441,7 @@
         
         let url;
         try {
-            const urlResponse = await fetch("const_URL.txt");
+            const urlResponse = await fetch("const_URL.txt", { cache: "no-store" });
             if (!urlResponse.ok) throw new Error("No se pudo leer const_URL.txt");
             url = (await urlResponse.text()).trim();
             console.log("URL leída del const_URL:", url);
