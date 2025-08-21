@@ -425,41 +425,44 @@
       
           // URL pública del google sheet CSV (no la compartas con nadie Rachel)
           //const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTnDFRVh3fUULKl_wMuNKZ6BfG_CO1zSoVURztI_7YqnqiWp7TnDuQJy3xq_9z8Jq0kU0e6mBm6JsWo/pub?gid=850291810&single=true&output=csv";
-          try {
+        let url;  
+        try {
               const urlResponse = await fetch("const_URL.txt");
               if (!urlResponse.ok) throw new Error("No se pudo leer url.txt");
-              const url = (await urlResponse.text()).trim();
+              url = (await urlResponse.text()).trim();
               console.log("URL leída del const_URL:", url);
           } catch (err) {
               console.error("Error al leer const_URL.txt:", err);
           }
+          if(url){
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Error al obtener datos del Sheet");
         
-          try {
-              const response = await fetch(url);
-              if (!response.ok) throw new Error("Error al obtener datos del Sheet");
-      
-              const csvText = await response.text();
-      
-              // Convertir CSV a array de arrays
-              const filas = csvText.split("\n").map(f => f.split(","));
-      
-              console.log("Datos del Sheet:", filas);
-      
-              // Filtrado por opción seleccionada (puedes cambiar f[1] según la columna que quieras)
-              const filtrado = filas.filter(f => f[1] === opcion);
-              console.log("Filtrado por opción:", filtrado);
-      
-              // Opcional: mostrar en HTML
-              const resultadoDiv = document.getElementById("resultado");
-              resultadoDiv.innerHTML = "";
-              filtrado.forEach(fila => {
-                  const div = document.createElement("div");
-                  div.textContent = fila.join(" | ");
-                  resultadoDiv.appendChild(div);
-              });
-      
-          } catch (err) {
-              console.error("Error al recibir datos:", err);
+                const csvText = await response.text();
+        
+                // Convertir CSV a array de arrays
+                const filas = csvText.split("\n").map(f => f.split(","));
+        
+                console.log("Datos del Sheet:", filas);
+        
+                // Filtrado por opción seleccionada (puedes cambiar f[1] según la columna que quieras)
+                const filtrado = filas.filter(f => f[1] === opcion);
+                console.log("Filtrado por opción:", filtrado);
+        
+                // Opcional: mostrar en HTML
+                const resultadoDiv = document.getElementById("resultado");
+                resultadoDiv.innerHTML = "";
+                filtrado.forEach(fila => {
+                    const div = document.createElement("div");
+                    div.textContent = fila.join(" | ");
+                    resultadoDiv.appendChild(div);
+                });
+        
+            } catch (err) {
+                console.error("Error al recibir datos:", err);
+            } else {
+              console.error("No se puede hacer fetch porque url no se definió");
           }
       });
      
