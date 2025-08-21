@@ -567,7 +567,9 @@
                horaFin >= hora;
       });
       
-      
+      if (eventosCelda.length > 0){
+      console.log(fechaStr, hora, eventosCelda )
+      }
 
       eventosCelda.forEach(ev => {
         const [hIni, mIni] = ev.Hora_inicio.split(":").map(Number);
@@ -577,7 +579,7 @@
         let finMin = (hora === hFin) ? mFin : 60;
 
         const duracion = finMin - inicioMin;
-        console.log(inioMin, finMin)
+        //console.log(inioMin, finMin)
         // Crear bloque visual dentro del td
         const bloque = document.createElement("div");
         bloque.style.position = "absolute";
