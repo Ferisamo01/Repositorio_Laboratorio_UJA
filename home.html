@@ -553,7 +553,6 @@
 
       // Buscar si hay eventos en esta fecha-hora
       const fechaStr = fecha.toISOString().split("T")[0]; // YYYY-MM-DD
-      console.log(fechaStr)
       const eventosCelda = eventosFiltrados.filter(ev => {
         const fechaEvento = ev[4];   // Fecha dd/mm/yyyy
         const horaInicio = parseInt(ev[2].split(":")[0]); // Hora inicio (hh)
@@ -566,7 +565,7 @@
       });
       
       if (eventosCelda.length > 0){
-      console.log("Hola")
+      console.log(fechaStr, hora, eventosCelda, "Hola")
       }
 
       eventosCelda.forEach(ev => {
