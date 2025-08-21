@@ -478,7 +478,14 @@
     }
     
     // Eventos
-    opcionSelect.addEventListener("change", cargarYFiltrarDatos);
+    opcionSelect.addEventListener("change", () => {
+        const fechaSeleccionada = new Date(fechaInput.value + "T00:00:00");
+        if (isNaN(fechaSeleccionada)) return;
+    
+        renderCalendario(fechaSeleccionada);
+        cargarYFiltrarDatos();
+    });
+     
     fechaInput.addEventListener("change", () => {
         const fechaSeleccionada = new Date(fechaInput.value + "T00:00:00");
         if (isNaN(fechaSeleccionada)) return;
@@ -592,8 +599,7 @@
         bloque.style.height = (duracion / 60) * 100 + "%";
         bloque.style.background = "rgba(72, 187, 120, 0.8)";
         bloque.style.borderRadius = "3px";
-        bloque.title = `${ev.Usuario} - ${ev.Motivo}`;
-
+        bloque.title = `${ev[0]} - ${ev[5] ? ev[5].trim() : ''}`;
         td.appendChild(bloque);
       });
 
