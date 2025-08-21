@@ -556,9 +556,13 @@
       // Buscar si hay eventos en esta fecha-hora
       const fechaStr = fecha.toISOString().split("T")[0]; // YYYY-MM-DD
       const eventosCelda = eventosFiltrados.filter(ev => {
-        return ev.Fecha === fechaStr &&
-               parseInt(ev.Hora_inicio.split(":")[0]) <= hora &&
-               parseInt(ev.Hora_fin.split(":")[0]) >= hora;
+        const fechaEvento = ev[4];   // Fecha dd/mm/yyyy
+        const horaInicio = parseInt(ev[2].split(":")[0]); // Hora inicio (hh)
+        const horaFin = parseInt(ev[3].split(":")[0]);    // Hora fin (hh)
+      
+        return fechaEvento === fechaStr &&
+               horaInicio <= hora &&
+               horaFin >= hora;
       });
       
       console.log(eventosCelda, fechaStr, eventosFiltrados)
@@ -571,7 +575,7 @@
         let finMin = (hora === hFin) ? mFin : 60;
 
         const duracion = finMin - inicioMin;
-
+        console.log(inioMin, finMin)
         // Crear bloque visual dentro del td
         const bloque = document.createElement("div");
         bloque.style.position = "absolute";
