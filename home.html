@@ -318,6 +318,12 @@
     setInterval(updateClock, 1000);
     updateClock();
 
+    function convertirFecha(fechaDDMMYYYY) {
+      const [dd, mm, yyyy] = fechaDDMMYYYY.split("/");
+      return `${yyyy}-${mm}-${dd}`;  // -> "2025-08-19"
+    }
+    
+    
     function generateCalendar() {
       const today = new Date();
       const month = today.getMonth();
@@ -554,7 +560,7 @@
       // Buscar si hay eventos en esta fecha-hora
       const fechaStr = fecha.toISOString().split("T")[0]; // YYYY-MM-DD
       const eventosCelda = eventosFiltrados.filter(ev => {
-        const fechaEvento = ev[4];   // Fecha dd/mm/yyyy
+        const fechaEvento = convertirFecha(ev[4].trim());   // Fecha dd/mm/yyyy
         const horaInicio = parseInt(ev[2].split(":")[0]); // Hora inicio (hh)
         const horaFin = parseInt(ev[3].split(":")[0]);    // Hora fin (hh)
         console.log("Comparando:", {fechaEvento, fechaStr, horaInicio, horaFin, hora});
