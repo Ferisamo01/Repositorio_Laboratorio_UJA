@@ -557,7 +557,7 @@
         const fechaEvento = ev[4];   // Fecha dd/mm/yyyy
         const horaInicio = parseInt(ev[2].split(":")[0]); // Hora inicio (hh)
         const horaFin = parseInt(ev[3].split(":")[0]);    // Hora fin (hh)
-        
+        console.log("Comparando:", {fechaEvento, fechaStr, horaInicio, horaFin, hora});
         //console.log(horaInicio, horaFin)
         return fechaEvento === fechaStr &&
                horaInicio <= hora &&
