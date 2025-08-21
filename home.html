@@ -427,7 +427,7 @@
       let eventosFiltrados = [];
 
      
-      async function cargarYFiltrarDatos() {
+     async function cargarYFiltrarDatos() {
         const opcion = opcionSelect.value;
         const fechaStr = fechaInput.value; // "YYYY-MM-DD"
         if (!opcion || !fechaStr) return; 
@@ -439,12 +439,18 @@
         const fechaMax = new Date(fechaCentral);
         fechaMax.setDate(fechaCentral.getDate() + 3);
     
-        let url;
+        let urlConCache;
         try {
-    
+            // 🔹 Leemos el TXT con la URL base del Sheet
             const urlResponse = await fetch("const_URL.txt?nocache=" + Date.now(), { cache: "no-store" });
             if (!urlResponse.ok) throw new Error("No se pudo leer const_URL.txt");
-            url = (await urlResponse.text()).trim();
+    
+            const url = (await urlResponse.text()).trim();
+    
+            // 🔹 Forzamos que siempre se use una versión fresca (anti-cache)
+            const separator = url.includes("?") ? "&" : "?";
+            urlConCache = url + separator + "nocache=" + Date.now();
+    
             console.log("URL leída del const_URL:", url);
         } catch (err) {
             console.error("Error al leer const_URL.txt:", err);
@@ -452,8 +458,8 @@
         }
     
         try {
-    
-            const response = await fetch(url + "?nocache=" + Date.now(), { cache: "no-store" });
+            // 🔹 Ahora sí pedimos el CSV de Google Sheets
+            const response = await fetch(urlConCache, { cache: "no-store" });
             if (!response.ok) throw new Error("Error al obtener datos del Sheet");
     
             const csvText = await response.text();
@@ -477,6 +483,7 @@
             console.error("Error al recibir datos:", err);
         }
     }
+    
 
 
 
