@@ -385,18 +385,32 @@
    function Agendar() {
       const mainContent = document.getElementById("mainContent");
       mainContent.innerHTML = `
-        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <div style="font-family: Arial, sans-serif; padding: 20px;">
           <h2 style="color: #2c7a7b; margin-bottom: 15px;">Agendar equipos</h2>
     
-          <!-- Picklist -->
-          <label for="opcion">Seleccione opción:</label>
-            <select id="opcion" style="margin: 10px 0; padding: 5px; border-radius: 5px;">
-              <option value="" disabled selected>-- Seleccione una opción --</option>
-              <option value="PIPETA">PIPETA</option>
-              <option value="TRANSMISOR">TRANSMISOR</option>
-              <option value="CENTRIFUGA">CENTRIFUGA</option>
-            </select>
-          <br><br>
+          <!-- Contenedor con select a la izquierda y botón a la derecha -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <div>
+              <label for="opcion">Seleccione opción:</label>
+              <select id="opcion" style="margin-left:10px; padding: 5px; border-radius: 5px;">
+                <option value="" disabled selected>-- Seleccione una opción --</option>
+                <option value="PIPETA">PIPETA</option>
+                <option value="TRANSMISOR">TRANSMISOR</option>
+                <option value="CENTRIFUGA">CENTRIFUGA</option>
+              </select>
+            </div>
+            <button id="btnAgendar" 
+                    style="padding: 8px 16px; background-color: #2c7a7b; color: white; border: none; border-radius: 6px; cursor: pointer;">
+              Agendar
+            </button>
+          </div>
+    
+          <!-- Motivo opcional -->
+          <div style="margin-bottom: 20px;">
+            <textarea id="motivo" rows="4" 
+                      placeholder="Motivo [opcional]" 
+                      style="width:100%; padding:8px; border-radius:6px; border:1px solid #ccc; font-style:italic; color:gray; resize:none;"></textarea>
+          </div>
     
           <!-- Fecha -->
           <label for="fecha">Seleccione fecha:</label>
@@ -412,6 +426,7 @@
             <label for="horaFin" style="font-weight:bold;">Hora de fin:</label>
             <input type="time" id="horaFin" style="padding:5px; border-radius:5px;">
           </div>
+    
           <!-- Calendario estilo Teams -->
           <h3 style="color: #2c7a7b;">Vista semanal</h3>
           <div id="calendarioTeams" 
