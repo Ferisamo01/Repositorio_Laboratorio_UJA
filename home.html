@@ -433,15 +433,16 @@
         if (!opcion || !fechaStr) return; 
     
         const fechaCentral = new Date(fechaStr + "T00:00:00");
-        
+    
         const fechaMin = new Date(fechaCentral);
         fechaMin.setDate(fechaCentral.getDate() - 3);
         const fechaMax = new Date(fechaCentral);
         fechaMax.setDate(fechaCentral.getDate() + 3);
-        
+    
         let url;
         try {
-            const urlResponse = await fetch("const_URL.txt", { cache: "no-store" });
+    
+            const urlResponse = await fetch("const_URL.txt?nocache=" + Date.now(), { cache: "no-store" });
             if (!urlResponse.ok) throw new Error("No se pudo leer const_URL.txt");
             url = (await urlResponse.text()).trim();
             console.log("URL leída del const_URL:", url);
@@ -451,33 +452,32 @@
         }
     
         try {
-            const response = await fetch(url);
+    
+            const response = await fetch(url + "?nocache=" + Date.now(), { cache: "no-store" });
             if (!response.ok) throw new Error("Error al obtener datos del Sheet");
     
             const csvText = await response.text();
             const filas = csvText.split("\n").map(f => f.split(","));
             console.log("Datos del Sheet:", filas);
-            
-            eventosFiltrados = []
-            
+    
             eventosFiltrados = filas.filter(f => {
                 const filaOpcion = f[1];
-                const filaFechaStr = f[4].trim(); // "DD/MM/YYYY"
+                const filaFechaStr = f[4]?.trim(); // "DD/MM/YYYY"
+                if (!filaFechaStr) return false;
                 const [dia, mes, anio] = filaFechaStr.split("/");
                 const filaFechaObj = new Date(`${anio}-${mes}-${dia}T00:00:00`);
     
                 return filaOpcion === opcion && filaFechaObj >= fechaMin && filaFechaObj <= fechaMax;
             });
-        
+    
             console.log("Eventos filtrados ±3 días", eventosFiltrados);
             renderCalendario(fechaCentral);
-            // Mostrar en HTML
-            
     
         } catch (err) {
             console.error("Error al recibir datos:", err);
         }
     }
+
 
 
     opcionSelect.addEventListener("change", cargarYFiltrarDatos);
