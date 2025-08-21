@@ -575,8 +575,8 @@
       }
 
       eventosCelda.forEach(ev => {
-        const [hIni, mIni] = ev.Hora_inicio.split(":").map(Number);
-        const [hFin, mFin] = ev.Hora_fin.split(":").map(Number);
+        const [hIni, mIni] = ev[2].split(":").map(Number);  // Hora_inicio
+        const [hFin, mFin] = ev[3].split(":").map(Number);  // Hora_fin
 
         let inicioMin = (hora === hIni) ? mIni : 0;
         let finMin = (hora === hFin) ? mFin : 60;
