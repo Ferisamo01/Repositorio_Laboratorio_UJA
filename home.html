@@ -424,6 +424,8 @@
      
       opcionSelect.addEventListener("change", async () => {
           const opcion = opcionSelect.value;
+          const fechaSeleccionada = new Date(fechaInput.value + "T00:00:00");
+        
           if (!opcion) return;
       
           let url;  
@@ -445,7 +447,14 @@
                   const filas = csvText.split("\n").map(f => f.split(","));
                   console.log("Datos del Sheet:", filas);
       
-                  const filtrado = filas.filter(f => f[1] === opcion);
+                  const filtrado = filas.filter(f => {
+                      const filaOpcion = f[1];
+                      const filaFechaStr = f[4].trim(); // "DD/MM/YYYY"
+                      const [dia, mes, anio] = filaFechaStr.split("/");
+                      const filaFechaObj = new Date(`${anio}-${mes}-${dia}T00:00:00`);
+          
+                      return filaOpcion === opcion && filaFechaObj.getTime() === fechaInputObj.getTime();
+                  });
                   console.log("Filtrado por opción:", filtrado);
       
                   const resultadoDiv = document.getElementById("resultado");
@@ -477,6 +486,54 @@
         });
 
         renderCalendario(fechaSeleccionada);
+
+         const opcion = opcionSelect.value;
+          if (!opcion) return;
+      
+          let url;  
+          try {
+              const urlResponse = await fetch("const_URL.txt");
+              if (!urlResponse.ok) throw new Error("No se pudo leer const_URL.txt");
+              url = (await urlResponse.text()).trim();
+              console.log("URL leída del const_URL:", url);
+          } catch (err) {
+              console.error("Error al leer const_URL.txt:", err);
+          }
+      
+          if (url) { // Solo si la URL se definió
+              try {
+                  const response = await fetch(url);
+                  if (!response.ok) throw new Error("Error al obtener datos del Sheet");
+      
+                  const csvText = await response.text();
+                  const filas = csvText.split("\n").map(f => f.split(","));
+                  console.log("Datos del Sheet:", filas);
+      
+                  const filtrado = filas.filter(f => {
+                      const filaOpcion = f[1];
+                      const filaFechaStr = f[4].trim(); // "DD/MM/YYYY"
+                      const [dia, mes, anio] = filaFechaStr.split("/");
+                      const filaFechaObj = new Date(`${anio}-${mes}-${dia}T00:00:00`);
+          
+                      return filaOpcion === opcion && filaFechaObj.getTime() === fechaInputObj.getTime();
+                  });
+                  console.log("Filtrado por opción:", filtrado);
+      
+                  const resultadoDiv = document.getElementById("resultado");
+                  resultadoDiv.innerHTML = "";
+                  filtrado.forEach(fila => {
+                      const div = document.createElement("div");
+                      div.textContent = fila.join(" | ");
+                      resultadoDiv.appendChild(div);
+                  });
+      
+              } catch (err) {
+                  console.error("Error al recibir datos:", err);
+              }
+          } else {
+              console.error("No se puede hacer fetch porque url no se definió");
+          }
+        
       });
      
      const hoy = new Date();
