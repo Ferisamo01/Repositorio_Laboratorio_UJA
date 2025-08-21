@@ -559,13 +559,14 @@
         const fechaEvento = ev[4];   // Fecha dd/mm/yyyy
         const horaInicio = parseInt(ev[2].split(":")[0]); // Hora inicio (hh)
         const horaFin = parseInt(ev[3].split(":")[0]);    // Hora fin (hh)
-      
+        
+        console.log(horaInicio, horaFin)
         return fechaEvento === fechaStr &&
                horaInicio <= hora &&
                horaFin >= hora;
       });
       
-      console.log(eventosCelda, fechaStr, eventosFiltrados)
+      
 
       eventosCelda.forEach(ev => {
         const [hIni, mIni] = ev.Hora_inicio.split(":").map(Number);
