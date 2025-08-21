@@ -457,7 +457,9 @@
             const csvText = await response.text();
             const filas = csvText.split("\n").map(f => f.split(","));
             console.log("Datos del Sheet:", filas);
-    
+            
+            eventosFiltrados = []
+            
             eventosFiltrados = filas.filter(f => {
                 const filaOpcion = f[1];
                 const filaFechaStr = f[4].trim(); // "DD/MM/YYYY"
@@ -468,7 +470,7 @@
             });
         
             console.log("Eventos filtrados ±3 días", eventosFiltrados);
-    
+            renderCalendario(fechaCentral);
             // Mostrar en HTML
             
     
@@ -476,9 +478,12 @@
             console.error("Error al recibir datos:", err);
         }
     }
-    
+
+
+    opcionSelect.addEventListener("change", cargarYFiltrarDatos);
+    fechaInput.addEventListener("change", cargarYFiltrarDatos);
     // Eventos
-    opcionSelect.addEventListener("change", () => {
+    /*opcionSelect.addEventListener("change", () => {
         const fechaSeleccionada = new Date(fechaInput.value + "T00:00:00");
         if (isNaN(fechaSeleccionada)) return;
     
@@ -499,7 +504,7 @@
     
         renderCalendario(fechaSeleccionada);
         cargarYFiltrarDatos();
-    });
+    });*/
      
      const hoy = new Date();
      fechaInput.value = hoy.toISOString().split('T')[0];
