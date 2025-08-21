@@ -560,6 +560,8 @@
                parseInt(ev.Hora_inicio.split(":")[0]) <= hora &&
                parseInt(ev.Hora_fin.split(":")[0]) >= hora;
       });
+      
+      console.log(eventosCelda, fechaStr, eventosFiltrados)
 
       eventosCelda.forEach(ev => {
         const [hIni, mIni] = ev.Hora_inicio.split(":").map(Number);
