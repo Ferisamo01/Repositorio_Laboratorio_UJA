@@ -226,13 +226,13 @@
 <body>
 
   <header>
-    Métodos Rachel
+    Métodos TEP-233
   </header>
 
   <div class="sidebar-left">
     <h3>Menú</h3>
     <button onclick="openCalculator()">Calculadora Científica</button>
-    <button onclick="Agendar()">Agendar Salones</button>
+    <button onclick="Agendar()">Agendar Equipos</button>
     <div id="frase-container"></div>
   </div>
 
@@ -392,9 +392,9 @@
           <label for="opcion">Seleccione opción:</label>
             <select id="opcion" style="margin: 10px 0; padding: 5px; border-radius: 5px;">
               <option value="" disabled selected>-- Seleccione una opción --</option>
-              <option value="PIPETA">PIPETO</option>
-              <option value="TRANSMISOR">TRANSMISOR</option>
-              <option value="CENTRIFUGA">CENTRIFUGA</option>
+              <option value="HPLC_C6">HPLC C6</option>
+              <option value="REACTOR_BUCHI">REACTOR BUCHI</option>
+              <option value="FRAP">FRAP</option>
             </select>
           <br><br>
     
@@ -639,7 +639,8 @@
       "La creatividad es inteligencia divirtiéndose.",
       "Aprender es crecer.",
       "La disciplina es libertad.",
-      /*Aqui puedes agregar mas frases Rachel* :P*/
+      "Eres más fuerte que ayer, pero menos que mañana",
+      /*Aqui puedes agregar mas frases positivas felices* :P*/
     ];
   const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
   document.getElementById("frase-container").textContent = fraseAleatoria;
@@ -739,7 +740,7 @@
             <h2 style="text-align:center; color:#006400;">HPLC B3</h2>
             <ol>
                 <li>🚰 Darle a grifo abajo. Poner flujo a 0,6 en 20 minutos.</li>
-                <li>⚗️ Todo lo que se inyecta aquí se debe pasar por columnilla antes y filtrar por 0,45.</li>
+                <li>⚗️ Todo lo que se inyecta aquí se debe pasar por columnilla antes y filtrar por 0,45 mm.</li>
                 <li>💧 Mientras revisar si tiene agua y si no ultrasonicar. Se debe revisar los Lunes y Viernes.</li>
                 <li>🖱️ Clic derecho en el cuadro de abajo a la izquierda blanco y darle a Move tray foward.</li>
                 <li>🧪 Meter vial en gradilla. La bandeja de la izquierda es la 1 y la de la derecha es 2. Tener cuidado y colocar el pico de la bandeja bien para que no haya problema. El pico a la izquierda conforme se mira.</li>
